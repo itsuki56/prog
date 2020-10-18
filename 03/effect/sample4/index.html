@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>pixastic</title>
+    <script src="jquery.js"></script>
+    <script src="pixastic.custom.js"></script>
+    <script src="base64.js"></script>
+    <script src="canvas2image.js"></script>
+</head>    
+<body>
+
+<!-- ボタン -->
+<div class="actiondemo">
+    <button onclick="description();">白黒</button>
+    <button onclick="solarize();">ソーラライズ</button>
+    <button onclick="sepia();">セピア</button>
+    <button onclick="flip();">横反転</button>
+    <button onclick="flipv();">縦反転</button>
+
+	<div>
+		<select id="ntype">
+		<option value="PNG">PNG</option>
+		<option value="JPG">JPG</option>
+		<option value="BMP">BMP</option>
+		</select>
+		&gt;
+		<button onclick="nfSaveData();">OUTPUT</button>
+	</div>
+</div>
+
+<!-- Canvas要素 -->
+<div><canvas width="400" height="300" id="demoimage"></canvas></div>
+
+
+<!-- Javascript -->
+<script>
+	var can = document.getElementById("demoimage");
+	var context = can.getContext("2d");
+	//Image
+	var img = new Image();
+	img.src = "base.jpg";
+	img.onload = function(){
+	    context.drawImage(img,0,0);
+	};
+	//以下ボタンアクション
+    //白黒
+     var description = function (){
+         Pixastic.process(document.getElementById('demoimage'), "desaturate", {average : false});
+     };
+    //ソーラライズ
+     var solarize = function (){
+         Pixastic.process(document.getElementById('demoimage'), "solarize");
+     };
+    //セピア
+     var sepia = function(){
+         Pixastic.process(document.getElementById('demoimage'), "sepia");
+     };
+    //横反転
+     var flip = function() {
+        Pixastic.process(document.getElementById('demoimage'), "fliph");
+     };
+    //縦反転
+     var flipv = function() {
+        Pixastic.process(document.getElementById('demoimage'), "flipv");
+     };
+     
+    // FILE保存処理:処理中データOUT
+    var nfSaveData = function (){
+        var str = document.getElementById('ntype').value;
+        var can = document.getElementById("demoimage");
+        _imgOutPutSwitch(str,can);
+    };
+    // FILE保存処理:処理中データOUT
+    var _imgOutPutSwitch = function(str,can){
+        if("PNG"==str){
+            Canvas2Image.saveAsPNG(can, false, 400, 300);
+        }else if("JPG"==str){
+            Canvas2Image.saveAsJPEG(can, false,400, 300);
+        }else{
+            Canvas2Image.saveAsBMP(can, false, 400, 300);
+        }
+    };
+
+</script>
+</body>
+</html>
+
+
+

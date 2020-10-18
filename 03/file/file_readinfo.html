@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FileAPI[info]</title>
+</head>
+<body>
+ファイル：
+<input id="file" name="file" type="file">
+<ul>
+  <li>名前：<span id="name"></span></li>
+  <li>種類：<span id="type"></span></li>
+  <li>サイズ：<span id="size"></span></li>
+  <li>最終更新日時：<span id="lmd"></span></li>
+</ul>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+// ファイルが指定されたタイミングで、その情報を表示
+$('#file').on('change', function() {
+    
+    //１．ブラウザがFileAPIに対応してるかチェック
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+    
+      //2. 指定されたファイルを選択
+      var input = $('#file').get(0).files[0]; //files[0]は最初のファイルの意味[固定値=0]
+      
+      //3. ファイル情報をHTMLに表示
+      $('#name').html(input.name);
+      $('#type').html(input.type);
+      $('#size').html(input.size / 1024);
+      $('#lmd').html(input.lastModifiedDate);
+        
+    } //if[end]
+    
+});
+
+</script>
+</body>
+</html>

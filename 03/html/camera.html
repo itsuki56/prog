@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+    </title>
+    <style>
+    fieldset{border:1px solid #666;padding:3px;}
+    #photarea{padding:5%;width:90%;background:black;}
+    img{width:100%}
+    </style>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+<body id="main">
+
+<!-- ヘッダー -->
+<header>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+    <div class="navbar-header"><a class="navbar-brand" href="#">写真アップロード</a></div>
+    </div>
+  </nav>
+</header>
+<!-- ヘッダー -->
+
+<!-- コンテンツ -->
+<div  class="container-fluid">
+  <div class="jumbotron">
+    <h1>PHP＆JS＆HTML５</h1>
+    <p>最初にカメラ選択をおこない、サーバにアップロードします。PHP側で受け取りサーバに置く処理をおこないます。</p>
+
+    <form method="post" action="#" enctype="multipart/form-data">
+        <p><input type="file" accept="image/*" capture="camera" id="image_file" name="upfile"></p>
+        <p><input type="submit" class="btn btn-success btn-lg" value="Fileアップロード"></p>
+    </form>
+
+  </div>
+  <div id="photarea"><!-- ここにPHPの変数を記述 --></div>
+</div>
+<!-- コンテンツ -->
+
+
+<script src="js/jquery-2.1.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+$("#image_file").on("change",function(){
+    const input = $('#image_file').get(0).files[0];
+    if(input.size/1024 > 150){
+      alert("OVER!!");
+      return fales;
+    }
+    if(input.type != "image/jpeg"){
+      alert("Not Jpeg!!");
+      return fales;
+    }
+});
+</script>
+</body>
+</html>
