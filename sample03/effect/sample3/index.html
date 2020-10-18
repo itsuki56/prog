@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>pixastic</title>
+    <script src="jquery.js"></script>
+    <script src="pixastic.custom.js"></script>
+</head>    
+<body>
+
+<!-- ボタン -->
+<div class="actiondemo">
+	<div>
+		<span>シャープ:</span>
+		<input type="range" id="sharp" value="0.1" min="0.01" max="1.0" step="0.1" onmouseup="modSharp()">
+    </div>
+    <div>
+    	<span>ガウス:</span>
+    	<input type="range" id="blur"  value="0.1" min="0" max="0.8" step="0.1" onmouseup="modblur()">
+    </div>
+    <button onclick="reset_btn();">Reset</button>
+</div>
+<div>
+	<canvas width="400" height="300" id="demoimage"></canvas>
+</div>
+
+
+<script>
+	var can = document.getElementById("demoimage");
+	var context = can.getContext("2d");
+	//Image
+	var img = new Image();
+	img.src = "base.jpg";
+	img.onload = function(){
+	    context.drawImage(img,0,0);
+	};
+	//リセット
+	function reset_btn() {
+		Pixastic.revert(document.getElementById("demoimage"));
+	}
+    //------------------------------------------------------------------
+    //スライダー：[Sharp]
+    var modSharp = function () {
+        Pixastic.process(document.getElementById("demoimage"), "sharpen", {
+            amount : parseFloat($("#sharp").val())
+        });
+    };	
+    //スライダー：Blur（ガウス）
+    var modblur = function () {
+        Pixastic.process(document.getElementById("demoimage"), "blurfast", {
+            amount : parseFloat($("#blur").val())
+        });
+    };
+
+</script>
+</body>
+</html>
+
+
+

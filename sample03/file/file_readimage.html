@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>FileAPI[image]</title>
+<style>#result{width:80%; margin:0px 0px 5px 0px;}</style>
+
+</head>
+<body>
+<h1>FileAPIで画像を読み込んだらconsoleで「img要素src属性」を確認すること！</h1>
+ファイル：
+<input id="file" name="file" type="file">
+<input type="range" min="0" max="100" value="50" id="a1">
+<img id="result">
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script>
+<script>
+// ファイルが指定されたタイミングで、その情報を表示
+$('#file').on('change', function() {
+    
+    //1. 指定されたファイルを選択
+    const input = $('#file').get(0).files[0];
+    
+    //2．ファイル読み込み：準備
+    const reader = new FileReader();
+    
+    //5．エラー処理
+    $(reader).on('error',function () {
+        alert("読み取り時にエラーが発生しました。");
+    });
+    
+    //4．ファイルの読み込みに成功したら、image要素に表示
+    $(reader).on('load', function() {
+        $('#result').attr('src', reader.result);
+    });
+    
+    //3．ファイル読み込み：ファイルの内容をDataURL形式で取得
+    reader.readAsDataURL(input);
+    
+});
+
+
+</script>
+</body>
+</html>

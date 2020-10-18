@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>pixastic</title>
+</head>    
+<body>
+
+<div class="actiondemo">
+<input type="button" onclick="demo();" value="Blur image">
+<input type="button" onclick="resetDemo();" value="Reset"><br>
+<canvas width="400" height="300" id="demoimage"></canvas>
+</div>
+
+
+<script src="jquery.js"></script>
+<script src="pixastic.custom.js"></script>
+<script>
+var can = document.getElementById("demoimage");
+var context = can.getContext("2d");
+//Image
+var img = new Image();
+img.src = "base.jpg";
+img.onload = function(){
+    context.drawImage(img,0,0);
+};
+function demo() {
+	Pixastic.process(can, "blur");
+}
+function resetDemo() {
+	Pixastic.revert(document.getElementById("demoimage"));
+}
+</script>
+</body>
+</html>
+
+
+

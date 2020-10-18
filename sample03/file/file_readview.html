@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FileAPI[read]</title>
+<style>#result{width:100%; height:200px; margin:0px 0px 5px 0px;}</style>
+
+</head>
+<body>
+ファイル：
+<input id="file" name="file" type="file">
+<textarea id="result"></textarea>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+// ファイルが指定されたタイミングで、その情報を表示
+$('#file').on('change', function() {
+    //１．ブラウザがFileAPIに対応してるかチェック
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+
+        //2. 指定されたファイルを選択
+      var input = $('#file').get(0).files[0];
+
+        //３．ファイル読み込み：準備
+      var reader = new FileReader();
+
+        //５．ファイルの読み込みに成功したら、改行を置き換えし、textArea要素に表示
+      $(reader).on('load', function() {
+          $('#result').val(reader.result); //text表示の場合(改行=¥n¥r)
+          //var output = reader.result.replace(/(\n|\r)/g, '<br />');  //html表示の場合(改行=br)
+      });
+
+      //４．ファイル読み込み：ファイルの内容をテキストとして取得
+      reader.readAsText(input, 'UTF-8');
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FileAPI[read]</title>
+<style>#result{width:50%;}#titlesub{font-size:16px;}</style>
+</head>
+<body>
+<h1>今月の入会者を表示<span id="titlesub">(data/chart_data.txtを選択)</span></h1>
+<p>ファイル：<input id="file" name="file" type="file"></p>
+<div id="result">
+    <canvas id="canvas" height="450" width="600"></canvas>
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script>
+// ファイルが指定されたタイミングで、その情報を表示
+$('#file').on('change', function() {
+    //１．ブラウザがFileAPIに対応してるかチェック
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        //2. 指定されたファイルを選択
+      var input = $('#file').get(0).files[0];
+        //３．ファイル読み込み：準備
+      var reader = new FileReader();
+        //５．ファイルの読み込みに成功したら、改行を置き換えし、textArea要素に表示
+      $(reader).on('load', function() {
+
+            //=======================================================
+            //応用 Start
+            //=======================================================
+            //FileAPI読み込み（テキスト文字列）→ eval関数でJavascript構文として処理
+            eval(reader.result);
+          
+            //上記evalの結果：読み込んだテキストがそのまま変数になる
+            //const chart_data = {
+            //  d1: [65, 59, 80, 81, 56, 55, 40, 40, 40, 40, 40, 40],
+            //  d2: [28, 48, 40, 19, 86, 27, 90, 100, 11, 39, 48, 98]
+            //};
+
+            var data = {
+                //labelsとchart_dataの長さは一緒である必要がある。
+                labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                datasets: [
+                    {
+                        label: "My First dataset",
+                        fillColor: "rgba(220,220,220,0.5)",
+                        strokeColor: "rgba(220,220,220,0.8)",
+                        highlightFill: "rgba(220,220,220,0.75)",
+                        highlightStroke: "rgba(220,220,220,1)",
+                        data: chart_data.d1 //d1
+                    },
+                    {
+                        label: "My Second dataset",
+                        fillColor: "rgba(151,187,205,0.5)",
+                        strokeColor: "rgba(151,187,205,0.8)",
+                        highlightFill: "rgba(151,187,205,0.75)",
+                        highlightStroke: "rgba(151,187,205,1)",
+                        data: chart_data.d2 //d2
+                    }
+                ]
+            };
+            //Chartライブラリ実行
+            var ctx = $("#canvas")[0].getContext("2d");
+            window.myBar = new Chart(ctx).Bar(data, {
+                responsive : true
+            });
+            //=======================================================
+            //応用 End
+            //=======================================================
+
+      });
+      //４．ファイル読み込み：ファイルの内容をテキストとして取得
+      reader.readAsText(input, 'UTF-8');
+    }
+  });
+</script>
+</body>
+</html>
