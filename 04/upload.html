@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ファイルアップロード</title>
+</head>
+<body>
+ 
+<!--  fromの属性に enctype="multipart/form-data" を付けるのを忘れずに！ //-->
+<form method="POST" action="fileupload.php" enctype="multipart/form-data">
+<input type="file" name="upfile">
+<input type="submit" name="submit" value="送信">
+</form>
+ 
+</body>
+</html>
